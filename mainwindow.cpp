@@ -1,8 +1,5 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "calcmethods.h"
-#include "calcarifmet.h"
-#include "calclogical.h"
 
 const int BIN = 2;
 const int OCT = 8;
@@ -206,6 +203,21 @@ void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
     ui->comboBox->setCurrentIndex(0);
     ui->comboBox_2->setCurrentIndex(2);
     ui->label_6->setText("");
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlQuery query;
+    db.setDatabaseName("History.db");
+
+    db.open();
+
+    query.exec("select * from History");
+
+    db.close();
+
+//    ui->tableWidget->setColumnCount(10);
+//    ui->tableWidget->setRowCount(10);
+
+
 
     //очистка 2-го калькулятора
     ui->lineEdit_2->setText("");

@@ -1,5 +1,4 @@
 #include "calcmethods.h"
-#include <stdexcept>
 
 const int BIN = 2;
 const int OCT = 8;

@@ -1,6 +1,7 @@
 #include <string>
 #include <algorithm>
 #include <map>
+#include <stdexcept>
 
 #ifndef CALCMETHODS_H
 #define CALCMETHODS_H

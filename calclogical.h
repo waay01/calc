@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #ifndef CALCLOGICAL_H
 #define CALCLOGICAL_H

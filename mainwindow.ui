@@ -45,7 +45,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page">
           <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -994,14 +994,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QListWidget" name="listWidget_2">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>250</height>
-            </size>
-           </property>
-          </widget>
+          <widget class="QTableWidget" name="tableWidget"/>
          </item>
         </layout>
        </widget>

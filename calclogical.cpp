@@ -1,5 +1,4 @@
 #include "calclogical.h"
-#include <stdexcept>
 
 const string digits = "01";
 const int sizeA = 4;

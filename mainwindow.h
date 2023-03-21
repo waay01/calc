@@ -8,6 +8,12 @@
 #include <thread>
 #include <string>
 #include <algorithm>
+#include <QtSql>
+#include <QSqlQuery>
+
+#include "calcmethods.h"
+#include "calcarifmet.h"
+#include "calclogical.h"
 
 using namespace std;
 
