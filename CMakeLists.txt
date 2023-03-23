@@ -15,16 +15,18 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Sql)
 
 set(PROJECT_SOURCES
-        calcmethods.h
-        calcmethods.cpp
-        calclogical.h
-        calclogical.cpp
-        calcarifmet.h
-        calcarifmet.cpp
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    database.h
+    database.cpp
+    calcmethods.h
+    calcmethods.cpp
+    calclogical.h
+    calclogical.cpp
+    calcarifmet.h
+    calcarifmet.cpp
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
