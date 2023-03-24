@@ -36,6 +36,7 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_listWidget_itemActivated(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
 };

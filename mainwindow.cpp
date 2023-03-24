@@ -21,9 +21,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    dataBase db;
-    db.showDataBase();
-
     if ((ui->lineEdit->text().length() > 10) || (ui->lineEdit->text().isEmpty())) {
         ui->label_6->setText("Error");
     }
@@ -35,11 +32,22 @@ void MainWindow::on_pushButton_clicked()
                         {2,10},
                         {3,16}};
 
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        QSqlQuery query;
+        db.setDatabaseName("History.db");
+
+        db.open();
         calcMethods calcA;
         switch(ui->comboBox_2->currentIndex()){
             case 0: //2
                 str = calcA.toBin((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
                 ui->label_6->setText(QString::fromStdString(str));
+                query.exec(QString("insert into calc(time_, num, systemIn, systemOut, result) "
+                                   "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                    .arg(ui->lineEdit->text())
+                                    .arg(st[ui->comboBox->currentIndex()])
+                                    .arg(st[ui->comboBox_2->currentIndex()])
+                                    .arg(QString::fromStdString(str)));
                 break;
             case 1: // 8
                 str = calcA.toOct((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
@@ -54,6 +62,7 @@ void MainWindow::on_pushButton_clicked()
                 ui->label_6->setText(QString::fromStdString(str));
                 break;
         }
+        db.close();
     }
 }
 
@@ -201,6 +210,63 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
 {
+    string nameDB = "";
+    switch(ui->listWidget->currentRow()) {
+        case 0:
+            nameDB = "calc";
+            break;
+        case 1:
+            nameDB = "calcLogical";
+            break;
+    }
+
+    int countColumn = 0;
+    int countRow = 0;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlQuery query;
+    QStringList listColumn = {"Число", "Из какой", "В какую", "Результат"}, listResultQuery;
+    db.setDatabaseName("History.db");
+
+    db.open();
+    if(db.isOpen()){
+        if(query.exec("Select * from " + QString::fromStdString(nameDB))){
+            while (query.next()) {
+                QString showInfomation1 = query.value(2).toString(),
+                        showInfomation2 = query.value(3).toString(),
+                        showInfomation3 = query.value(4).toString(),
+                        showInfomation4 = query.value(5).toString();
+                listResultQuery << showInfomation1
+                                << showInfomation2
+                                << showInfomation3
+                                << showInfomation4;
+                ++countRow;
+            }
+        } else {
+            qDebug() << "Error query: " << query.lastError().text();
+        }
+        db.close();
+    } else {
+        qDebug() << "Error open db: " << db.lastError().text();
+        return;
+    }
+
+    ui->tableWidget->setColumnCount(4);
+    ui->tableWidget->setRowCount(countRow);
+
+    ui->tableWidget->setHorizontalHeaderLabels(listColumn);
+
+    int countResultQuery = 0;
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+        for (int j = 0; j < ui->tableWidget->columnCount(); ++j) {
+            QTableWidgetItem *item = new QTableWidgetItem(listResultQuery[j+countResultQuery]);
+            ui->tableWidget->setItem(i, j, item);
+        }
+        countResultQuery += 4;
+    }
+
+    db.close();
+
+
     //очистка 1-го калькулятора
     ui->lineEdit->setText("");
     ui->comboBox->setCurrentIndex(0);

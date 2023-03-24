@@ -10,7 +10,8 @@ using namespace std;
 class dataBase
 {
 public:
-    void showDataBase();
+    void connectDB();
+    void disconectDB();
 };
 
 #endif // DATABASE_H
