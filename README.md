@@ -1,3 +1,3 @@
 # calc
 
-![image](https://user-images.githubusercontent.com/109155301/226203481-a464688f-6d06-4a50-bde1-044db4fcc66c.png)
+![image](https://user-images.githubusercontent.com/109155301/227771498-18bc49a4-91ad-4525-bb32-6697225e5c47.png)

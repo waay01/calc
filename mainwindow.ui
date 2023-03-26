@@ -1011,16 +1011,28 @@
              <bold>false</bold>
             </font>
            </property>
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOff</enum>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showGrid">
+            <bool>false</bool>
            </property>
            <attribute name="horizontalHeaderCascadingSectionResizes">
             <bool>true</bool>
            </attribute>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>60</number>
+           </attribute>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>78</number>
+            <number>72</number>
            </attribute>
            <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
             <bool>false</bool>
            </attribute>
            <attribute name="horizontalHeaderStretchLastSection">
@@ -1107,9 +1119,33 @@
      <string>Меню</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>История</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>Обновить</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Очистить последний запрос</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Очистить все</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -42,24 +42,46 @@ void MainWindow::on_pushButton_clicked()
             case 0: //2
                 str = calcA.toBin((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
                 ui->label_6->setText(QString::fromStdString(str));
-                query.exec(QString("insert into calc(time_, num, systemIn, systemOut, result) "
+                query.exec(QString("insert into calcMethods(time_, num, systemIn, systemOut, result) "
                                    "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
                                     .arg(ui->lineEdit->text())
                                     .arg(st[ui->comboBox->currentIndex()])
                                     .arg(st[ui->comboBox_2->currentIndex()])
                                     .arg(QString::fromStdString(str)));
+                str = "";
                 break;
             case 1: // 8
                 str = calcA.toOct((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
                 ui->label_6->setText(QString::fromStdString(str));
+                query.exec(QString("insert into calcMethods(time_, num, systemIn, systemOut, result) "
+                                   "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                    .arg(ui->lineEdit->text())
+                                    .arg(st[ui->comboBox->currentIndex()])
+                                    .arg(st[ui->comboBox_2->currentIndex()])
+                                    .arg(QString::fromStdString(str)));
+                str = "";
                 break;
             case 2: //10
                 str = calcA.toDec((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
                 ui->label_6->setText(QString::fromStdString(str));
+                query.exec(QString("insert into calcMethods(time_, num, systemIn, systemOut, result) "
+                                   "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                    .arg(ui->lineEdit->text())
+                                    .arg(st[ui->comboBox->currentIndex()])
+                                    .arg(st[ui->comboBox_2->currentIndex()])
+                                    .arg(QString::fromStdString(str)));
+                str = "";
                 break;
             case 3: //16
                 str = calcA.toHex((ui->lineEdit->text()).toStdString(), st[ui->comboBox->currentIndex()]);
                 ui->label_6->setText(QString::fromStdString(str));
+                query.exec(QString("insert into calcMethods(time_, num, systemIn, systemOut, result) "
+                                   "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                    .arg(ui->lineEdit->text())
+                                    .arg(st[ui->comboBox->currentIndex()])
+                                    .arg(st[ui->comboBox_2->currentIndex()])
+                                    .arg(QString::fromStdString(str)));
+                str = "";
                 break;
         }
         db.close();
@@ -70,11 +92,23 @@ void MainWindow::on_pushButton_2_clicked()
 {
     calcLogical calcL;
     string str;
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlQuery query;
+    db.setDatabaseName("History.db");
+
+    db.open();
     switch (ui->lineEdit_4->text().toInt())
     {
         case 0:
             str = calcL.logicalNot(ui->lineEdit_2->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
 
@@ -82,6 +116,12 @@ void MainWindow::on_pushButton_2_clicked()
             str = calcL.logicalOr(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             str = calcL.logicalNot(str);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
 
@@ -89,12 +129,24 @@ void MainWindow::on_pushButton_2_clicked()
             str = calcL.logicalNot(ui->lineEdit_2->text().toStdString());
             str = calcL.logicalAnd(str, ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
 
         case 11:
             str = calcL.logical(0);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
 
@@ -102,68 +154,141 @@ void MainWindow::on_pushButton_2_clicked()
             str = calcL.logicalAnd(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             str = calcL.logicalNot(str);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 101:
             str = calcL.logicalNot(ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 110:
             str = calcL.logicalXor(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 111:
             str = calcL.logicalNot(ui->lineEdit_3->text().toStdString());
             str = calcL.logicalAnd(ui->lineEdit_2->text().toStdString(), str);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1000:
             str = calcL.logicalNot(ui->lineEdit_2->text().toStdString());
             str = calcL.logicalOr(str, ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1001:
             str = calcL.logicalXor(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             str = calcL.logicalNot(str);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1010:
             str = calcL.justNum(ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1011:
             str = calcL.logicalAnd(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1100:
             str = calcL.logical(1);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1101:
             str = calcL.logicalNot(ui->lineEdit_3->text().toStdString());
             str = calcL.logicalOr(ui->lineEdit_2->text().toStdString(), str);
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1110:
             str = calcL.logicalOr(ui->lineEdit_2->text().toStdString(), ui->lineEdit_3->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
         case 1111:
             str = calcL.justNum(ui->lineEdit_2->text().toStdString());
             ui->label_12->setText(QString::fromStdString(str));
+            query.exec(QString("insert into calcLogical(time_, numA, numB, command, result) "
+                               "values (datetime(\"now\", \"localtime\"), %1, %2, %3, %4)")
+                                .arg(ui->lineEdit_2->text())
+                                .arg(ui->lineEdit_3->text())
+                                .arg(ui->lineEdit_4->text())
+                                .arg(QString::fromStdString(str)));
             str = "";
         break;
     }
+    db.close();
 
 }
 
@@ -211,12 +336,20 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
 {
     string nameDB = "";
+    QStringList listColumn, listResultQuery;
     switch(ui->listWidget->currentRow()) {
         case 0:
-            nameDB = "calc";
+            nameDB = "calcMethods";
+            listColumn = {"Num", "From", "To", "Result"};
             break;
         case 1:
             nameDB = "calcLogical";
+            listColumn = {"Num 1", "Num 2", "Mode", "Result"};
+
+            break;
+        case 2:
+            nameDB = "calcArifmet";
+            listColumn = {"Num 1", "Num 2", "Mode", "key / Result"};
             break;
     }
 
@@ -224,7 +357,6 @@ void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
     int countRow = 0;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     QSqlQuery query;
-    QStringList listColumn = {"Число", "Из какой", "В какую", "Результат"}, listResultQuery;
     db.setDatabaseName("History.db");
 
     db.open();
@@ -289,3 +421,83 @@ void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
     ui->groupBox_3->setTitle(ui->listWidget->currentItem()->text());
     ui->stackedWidget->setCurrentIndex(ui->listWidget->currentRow());
 }
+
+
+void MainWindow::on_action_triggered()
+{
+    string nameDB = "";
+    QStringList listColumn, listResultQuery;
+    switch(ui->listWidget->currentRow()) {
+        case 0:
+            nameDB = "calcMethods";
+            listColumn = {"Num", "From", "To", "Result"};
+            break;
+        case 1:
+            nameDB = "calcLogical";
+            listColumn = {"Num 1", "Num 2", "Mode", "Result"};
+
+            break;
+        case 2:
+            nameDB = "calcArifmet";
+            listColumn = {"Num 1", "Num 2", "Mode / key", "Result"};
+            break;
+    }
+
+    int countColumn = 0;
+        int countRow = 0;
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        QSqlQuery query;
+        db.setDatabaseName("History.db");
+
+        db.open();
+        if(db.isOpen()){
+            if(query.exec("Select * from " + QString::fromStdString(nameDB))){
+                while (query.next()) {
+                    QString showInfomation1 = query.value(2).toString(),
+                            showInfomation2 = query.value(3).toString(),
+                            showInfomation3 = query.value(4).toString(),
+                            showInfomation4 = query.value(5).toString();
+                    listResultQuery << showInfomation1
+                                    << showInfomation2
+                                    << showInfomation3
+                                    << showInfomation4;
+                    ++countRow;
+                }
+            } else {
+                qDebug() << "Error query: " << query.lastError().text();
+            }
+            db.close();
+        } else {
+            qDebug() << "Error open db: " << db.lastError().text();
+            return;
+        }
+
+        ui->tableWidget->setColumnCount(4);
+        ui->tableWidget->setRowCount(countRow);
+
+        ui->tableWidget->setHorizontalHeaderLabels(listColumn);
+
+        int countResultQuery = 0;
+        for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+            for (int j = 0; j < ui->tableWidget->columnCount(); ++j) {
+                QTableWidgetItem *item = new QTableWidgetItem(listResultQuery[j+countResultQuery]);
+                ui->tableWidget->setItem(i, j, item);
+            }
+            countResultQuery += 4;
+        }
+
+        db.close();
+}
+
+
+void MainWindow::on_action_2_triggered()
+{
+    qDebug() << "clear last query";
+}
+
+
+void MainWindow::on_action_3_triggered()
+{
+    qDebug() << "clear All";
+}
+
